@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const userRoutes = require('./userRoutes');
-const encryptionRoutes = require('./encryptionKeyRoutes');
+const encryptionRoutes = require('./encryptedPWDRoutes');
 const passcodeRoutes = require('./onetimePasscodeRoutes');
 const rainbowRoutes = require('./rainbowTableRoutes');
-const cipherRoutes = require('./cipherRoutes');
+const cipherRoutes = require('./passphraseRoutes');
 
 router.use('/users', userRoutes);
 router.use('/encryption_keys', encryptionRoutes);

@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 });
 
 // Delete rainbow table
-RainbowTable.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   RainbowTable.destroy({
     where: {
       id: req.params.id

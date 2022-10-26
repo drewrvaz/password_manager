@@ -1,20 +1,27 @@
-<h2 class="title is-3">
-    Sign Up
-</h2>
+<div class="box" style="height:350px; max-width:450px;margin-left:auto;margin-right:auto;margin-top:10px;">
+<div class="is-size-4 has-text-black has-text-centered">Sign Up</div>
+    <form class="form signup-form">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+                <input class="input" type="username" id="username-login">
+            </div>
+        </div>
 
-<form class="box">
-<div class="field">
-    <label class="label">Email</label>
-    <div class="control">
-        <input class="input" type="email" placeholder="email@example.com">
-    </div>
-</div>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="input" type="password" id="password-login1">
+            </div>
+        </div>
 
-<div class="field">
-    <label class="label">Password</label>
-    <div class="control">
-        <input class="input" type="password" placeholder="********">
-    </div>
+        <div class="field">
+            <label class="label">Confirm Password</label>
+            <div class="control">
+                <input class="input" type="password" id="password-login2">
+            </div>
+        </div>
+        <button class="button is-block is-fullwidth is-black has-text-white" type="submit">Sign Up</button>
+    </form>
 </div>
-<button class="button">Sign up</button>
-</form>
+<script src="/js/signup.js"></script>
