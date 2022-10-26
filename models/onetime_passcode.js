@@ -20,10 +20,10 @@ OneTimePasscode.init(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    cipher_id: {
+    passphrase_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'cipher',
+        model: 'passphrase',
         key: 'id',
       },
     },
