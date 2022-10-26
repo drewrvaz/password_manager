@@ -13,14 +13,20 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bulma": "^0.9.4",
     "connect-session-sequelize": "^7.0.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
+    "handlebars": "^4.7.7",
     "mysql2": "^2.2.5",
+<<<<<<< HEAD
+    "sequelize": "^6.25.3"
+=======
     "sequelize": "^6.3.5",
     "crypto-js": "^4.1.1"
+>>>>>>> c9f1bce987509edc31871074810d9f5727c0717b
   },
   "devDependencies": {
     "eslint": "^7.12.1",
