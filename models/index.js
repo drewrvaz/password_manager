@@ -9,7 +9,7 @@ User.hasMany(Passphrase, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
-
+ 
 Passphrase.belongsTo(User, {
   foreignKey: 'user_id'
 });
@@ -24,4 +24,4 @@ Passphrase.hasOne(EncryptedPwd, {
 });
 
 
-module.exports = { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, SearchContent }
+module.exports = { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, SearchContent };

@@ -3,6 +3,7 @@ const { OneTimePasscode } = require('../../models');
 
 // Create new onetime passcode
 router.post('/', (req, res) => {
+
   OneTimePasscode.create({
     passcode: req.body.passcode,
     expiration: req.body.expiration
