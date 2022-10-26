@@ -9,7 +9,7 @@ User.hasMany(Passphrase, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
-
+ 
 Passphrase.belongsTo(User, {
   foreignKey: 'user_id'
 });
