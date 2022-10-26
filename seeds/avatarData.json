@@ -1,0 +1,22 @@
+[
+  {
+    "name": "hockey mask",
+    "icon":"fa-solid fa-hockey-mask"
+  },
+  {
+    "name": "face awesome",
+    "icon": "fa-solid fa-face-awesome"
+  },
+  {
+    "name": "ghost",
+    "icon": "fa-solid fa-ghost"
+  },
+  {
+    "name": "bat",
+    "icon": "fa-solid fa-bat"
+  },
+  {
+    "name": "bounty hunter",
+    "icon": "fa-solid fa-bat"
+  }
+]
