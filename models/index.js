@@ -1,30 +1,27 @@
-27 lines (21 sloc)  668 Bytes
-
 const User = require('./user');
-const Ciphers = require('./ciphers');
-const EncryptionKeys = require('./encryption_keys');
+const Passphrase = require('./passphrase');
+const EncryptedPwd = require('./encrypted_pwd');
 const OneTimePasscode = require('./onetime_passcode');
 const RainbowTable = require('./rainbow_table');
 const SearchContent = require('./search_content')
 
-User.hasMany(Ciphers, {
+User.hasMany(Passphrase, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
-
-Ciphers.belongsTo(User, {
+ 
+Passphrase.belongsTo(User, {
   foreignKey: 'user_id'
 });
 
-EncryptionKeys.hasOne(Ciphers, {
+EncryptedPwd.hasOne(Passphrase, {
   foreignKey: 'cipher_id',
   onDelete: 'CASCADE'
 });
 
-Ciphers.hasOne(EncryptionKeys, {
+Passphrase.hasOne(EncryptedPwd, {
   foreignKey: 'cipher_id'
 });
 
 
-
-module.exports = { User, Ciphers, EncryptionKeys, OneTimePasscode, RainbowTable, SearchContent }
+module.exports = { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, SearchContent };
