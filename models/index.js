@@ -24,4 +24,4 @@ Passphrase.hasOne(EncryptedPwd, {
 });
 
 
-module.exports = { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, SearchContent }
+module.exports = { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, SearchContent };
