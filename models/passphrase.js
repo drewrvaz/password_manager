@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Ciphers extends Model {}
+class Passphrase extends Model {}
 
-Ciphers.init(
+Passphrase.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ Ciphers.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    cipher: {
+    passphrase: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -19,10 +19,10 @@ Ciphers.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    key_id: {
+    password_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'encryption_keys',
+        model: 'encryptedpwd',
         key: 'id'
       }
     },
@@ -43,4 +43,4 @@ Ciphers.init(
   }
 );
 
-module.exports = Ciphers;
+module.exports = Passphrase;
