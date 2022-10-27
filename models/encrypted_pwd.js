@@ -21,7 +21,7 @@ EncryptedPwd.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'project',
+    modelName: 'encrypted_pwd',
   }
 );
 

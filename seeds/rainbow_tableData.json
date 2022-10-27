@@ -1,17 +1,17 @@
 [
   {
-    "encrypted_password": "password12345"
+    "hash": "password12345"
   },
   {
-    "encrypted_password": "password12345"
+    "hash": "password12345"
   },
   {
-    "encrypted_password": "password12345"
+    "hash": "password12345"
   },
   {
-    "encrypted_password": "password12345"
+    "hash": "password12345"
   },
   {
-    "encrypted_password": "password12345"
+    "hash": "password12345"
   }
 ]

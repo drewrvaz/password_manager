@@ -16,25 +16,26 @@ OneTimePasscode.init(
       allowNull: false,
     },
     expiration: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
-    passphrase_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'passphrase',
-        key: 'id',
-      },
-    },
+
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'project',
+    modelName: 'onetimepasscode',
   }
 );
 
 module.exports = OneTimePasscode;
+
+// passphrase_id: {
+//   type: DataTypes.INTEGER,
+//   references: {
+//     model: 'passphrase',
+//     key: 'id',
+//   },
+// },

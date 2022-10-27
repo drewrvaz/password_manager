@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class RainbowTable extends Model {}
+class Avatar extends Model {}
 
-RainbowTable.init(
+Avatar.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,18 +11,22 @@ RainbowTable.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    hash: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    icon: {
+      type: DataTypes.STRING,
+      allowNull: false,
   },
-  {
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'rainbowtable',
-  }
+},
+{
+  sequelize,
+  timestamps: false,
+  freezeTableName: true,
+  underscored: true,
+  modelName: 'avatar',
+}
 );
 
-module.exports = RainbowTable;
+module.exports = Avatar;
