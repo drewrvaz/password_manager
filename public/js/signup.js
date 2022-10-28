@@ -7,8 +7,6 @@ const signupFormHandler = async (event) => {
   const password = document.querySelector('#password-signup1').value.trim();
   const password2 = document.querySelector('#password-signup2').value.trim();
 
-  //$('#messageBox').empty();
-
   if (username && password && password2) {
     if (password !== password2) {
       alert('Passwords do not match, please try again')
@@ -21,11 +19,11 @@ const signupFormHandler = async (event) => {
       });
 
       if (response.ok) {
-        // document.location.replace('/login');
-        console.log("Successfully signed up!");
-        //document.querySelector('#messageBox').append("Successfully signed up!");
+        document.location.replace('/login');
+        // alert("Successfully signed up!");
+        document.querySelector('#signupMessage').removeclass("is-disable").text("Successfully signed up!");
       } else {
-        console.log('Failed to sign up');
+        alert('Failed to sign up');
       }
     }
   }
