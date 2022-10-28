@@ -2,10 +2,10 @@ const router = require('express').Router();
 const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth ,async (req, res) => {
   try {
 
-    res.redirect('/home');
+    res.redirect('/dashboard');
   } catch (err) {
     res.status(500).json(err);
   }
@@ -33,16 +33,9 @@ router.get('/signup', (req, res) => {
 
 });
 
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
 
-  // const postData = await Posts.findAll({
-  //   include: [{ model: User, attributes: { exclude: ['password','id'] } }], 
-  // }).catch((err) => { 
-  //   res.json(err);
-  // });
   try {
-    // const posts = postData.map((post) => post.get({ plain: true }));
-    // console.log(posts)
     res.render('dashboard', { logged_in: req.session.logged_in, });
 
   } catch (err) {
