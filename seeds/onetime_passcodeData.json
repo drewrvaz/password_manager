@@ -1,27 +1,22 @@
 [
   {
     "passcode": "123456",
-    "expiration": "2018-01-01T08:00:00.000Z",
     "passphraseId": 1
   },
   {
     "passcode": "654321",
-    "expiration": "2018-01-01T08:00:00.000Z",
     "passphraseId": 2
   },
   {
     "passcode": "123890",
-    "expiration": "2018-01-01T08:00:00.000Z",
     "passphraseId": 3
   },
   {
     "passcode": "098321",
-    "expiration": "2018-01-01T08:00:00.000Z",
     "passphraseId": 4
   },
   {
     "passcode": "234789",
-    "expiration": "2018-01-01T08:00:00.000Z",
     "passphraseId": 5
   }
 ]

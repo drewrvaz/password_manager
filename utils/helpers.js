@@ -1,14 +1,15 @@
-
 const crypto = require('crypto-js');
+const bcrypt = require('bcrypt');
+const { Passphrase } = require('../models');
 
 const encryptPWD = (pwd, passphrase) => {
   var encrypted = crypto.AES.encrypt(pwd, passphrase);
-  return encrypted;
+  return encrypted.toString();
 };
 
-const decryptPWD = (pwd, passphrase) => {
-  var decrypted = crypto.AES.encrypt(pwd, passphrase);
-  return decrypted;
+const decryptPWD = async (pwd, passphrase) => {
+  var decrypted = await crypto.AES.encrypt(pwd, passphrase);
+  return decrypted.toString();
 };
 
 const onetimePasscode = () => {
@@ -22,4 +23,9 @@ const onetimePasscode = () => {
   return OTP;
 };
 
-module.exports = {encryptPWD, decryptPWD, onetimePasscode};
+async function generatePassphrase() {  
+  var passphrase = await bcrypt.hash(onetimePasscode(), 2);
+  return passphrase;
+}
+
+module.exports = {encryptPWD, decryptPWD, onetimePasscode, generatePassphrase};

@@ -13,17 +13,30 @@ const avatarData = require('./avatarData.json');
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
+  await Avatar.bulkCreate(avatarData);
+
   await User.bulkCreate(userData, {
     individualHooks: true,
     returning: true,
   });
 
-  await Passphrase.bulkCreate(passphraseData);
-  await EncryptedPwd.bulkCreate(encrypted_pwdData);
+  await Passphrase.bulkCreate(passphraseData, {
+    individualHooks: true,
+    returning: true,
+  });
+
+  await EncryptedPwd.bulkCreate(encrypted_pwdData, {
+    individualHooks: true,
+    returning: true,
+  });
+
   await OneTimePasscode.bulkCreate(otpData);
   await SearchContent.bulkCreate(searchcontentData);
-  await RainbowTable.bulkCreate(rainbowtableData);
-  await Avatar.bulkCreate(avatarData);
+  await RainbowTable.bulkCreate(rainbowtableData, {
+    individualHooks: true,
+    returning: true,
+  });
+  
 
   process.exit(0);
 };
