@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-black">
 
 <head>
     <meta charset="UTF-8">
@@ -9,24 +9,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="has-background-grey-dark">
     <section class="has-background-grey-dark">
-
-        
+   
         <nav class="navbar has-background-black" role="navigation" aria-label="main navigation">
             
             <div class="navbar-brand">
                 <span class="is-size-3 has-text-success" style="margin-top: auto; margin-bottom:auto;margin-left:10px;margin-right:10px;"><i class="fas fa-piggy-bank"></i>
                     Pass<span class="is-size-3 has-text-white" >SAVE</span>
                 </span>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarList">
+                <a role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navbarList">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
-
             </div>
 
             <div class="navbar-menu" id="navbarList">
@@ -58,7 +57,7 @@
 
                             {{/unless}}
                             {{#if logged_in}}
-                            <a class="button is-light" id="logout">
+                            <a class="button is-success" id="logout">
                             Log Out
                             </a>
                             {{/if}}
