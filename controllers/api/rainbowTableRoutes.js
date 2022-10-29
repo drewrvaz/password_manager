@@ -3,7 +3,7 @@ const { RainbowTable } = require('../../models');
 
 // GET all rainbow tables
 router.get('/', (req, res) => {
-  RainbowTable.findall()
+  RainbowTable.findAll()
   .then((dbRainbowTable) => res.status(200).json(dbRainbowTable))
   .catch((err) => {
     console.log(err);
@@ -14,8 +14,7 @@ router.get('/', (req, res) => {
 // Create new rainbow table
 router.post('/', (req, res) => {
   RainbowTable.create({
-    passcode: req.body.passcode,
-    expiration: req.body.expiration
+    hash: req.body.hash,
   })
   .then((dbRainbowTable) => res.status(200).json(dbRainbowTable))
   .catch((err) => {
@@ -33,7 +32,7 @@ router.delete('/:id', (req, res) => {
   })
   .then(dbRainbowTable => {
     if (!dbRainbowTable) {
-      res.status(404).json({ message: 'No onetime passcode with this id!' });
+      res.status(404).json({ message: 'No rainbow table item with this id!' });
       return;
     }
     res.status(200).json(dbRainbowTable);

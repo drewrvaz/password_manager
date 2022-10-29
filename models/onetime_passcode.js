@@ -1,5 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const moment = require('moment')
+const { onetimePasscode} = require('../utils/helpers');
+
+const time = moment();
 
 class OneTimePasscode extends Model {}
 
@@ -18,10 +22,17 @@ OneTimePasscode.init(
     expiration: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW
     },
 
   },
   {
+    hooks: {
+      beforeCreate: async (newOTPData) => {
+        newOTPData.passcode = onetimePasscode();
+        return newOTPData.passcode;
+      },
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -31,11 +42,3 @@ OneTimePasscode.init(
 );
 
 module.exports = OneTimePasscode;
-
-// passphrase_id: {
-//   type: DataTypes.INTEGER,
-//   references: {
-//     model: 'passphrase',
-//     key: 'id',
-//   },
-// },

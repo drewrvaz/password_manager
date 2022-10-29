@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const { generatePassphrase } = require('../utils/helpers');
 
 class Passphrase extends Model {}
 
@@ -21,6 +22,12 @@ Passphrase.init(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (newPassphraseData) => {
+        newPassphraseData.passphrase = await generatePassphrase();
+        return newPassphraseData;
+      },
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
