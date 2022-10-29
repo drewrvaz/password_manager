@@ -9,7 +9,8 @@ const signupFormHandler = async (event) => {
 
   if (username && password && password2) {
     if (password !== password2) {
-      alert('Passwords do not match, please try again')
+      // alert('Passwords do not match, please try again')
+      $('#signupMessage').text("Passwords do not match, please try again");
     } else {
       // Send the username and password to the server
       const response = await fetch('/api/users/signup', {
@@ -19,13 +20,22 @@ const signupFormHandler = async (event) => {
       });
 
       if (response.ok) {
-        document.location.replace('/login');
-        // alert("Successfully signed up!");
-        document.querySelector('#signupMessage').removeclass("is-disable").text("Successfully signed up!");
+        const loginResponse = await fetch('/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({ username, password }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (loginResponse.ok) {
+          document.location.replace('/');
+        } else {
+          $('#signupMessage').text("Failed to automatically login!");
+        }
       } else {
-        alert('Failed to sign up');
+        $('#signupMessage').text("Failed to sign up!");
       }
     }
+  } else {
+    $('#signupMessage').text("You need to enter a username, password, and confirm the password. Please try again!");
   }
 };
 
