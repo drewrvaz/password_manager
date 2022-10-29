@@ -1,32 +1,49 @@
-<div class="columns is-mobile m-0"  style="height:100%;width:100%;overflow: auto;">
+<div class="field has-addons" style="margin-bottom:0;margin-left:80px;">
+  <div class="control is-expanded">
+    <div class="select is-fullwidth is-small">
+      <select name="country">
+        <option value="All">All</option>
+      </select>
+    </div>
+  </div>
+  <div class="control">
+    <button type="submit" class="button is-success is-small has-text-weight-semibold">Filter</button>
+  </div>
+</div>
+
+<div class="columns is-mobile m-0"  style="min-height:690px;width:100%;overflow: auto;">
     <div class="column is-1" style="width:80px;resize: none;">
+      <p class="has-text-white is-size-4 has-text-centered" style="display: inline-block;border-radius: 60px;box-shadow: 0 0 4px white;padding: 0.5em 0.6em;margin-top:-10px;margin-bottom:20px;"><i class="fa-solid fa-user"></i></p> 
         <ul class="menu-list">
-            <li title="Add Password"><a class="has-text-white is-size-4 has-text-centered" id="addPassBtn"><i class="fa-solid fa-circle-plus"></i></a></li>
-            <li title="Modify Password Policy"><a class="has-text-white is-size-4 has-text-centered" style="border-top: 2px solid white; border-bottom: 2px solid white;"><i class="fa-solid fa-floppy-disk"></i></a></li>  
-            <li title="Run Rainbow Test on Password"><a class="has-text-white is-size-4 has-text-centered"><i class="fa-solid fa-flask-vial"></i></a></li>
+            <li title="Add Password"><a class="has-text-white is-size-6 has-text-centered" id="addPassBtn"><i class="fa-solid fa-circle-plus"></i></a></li>
+            <li title="Retieve Password with OTP"><a class="has-text-white is-size-6 has-text-centered" id="retrivePassOTPBtn" style="border-top: 2px solid white;"><i class="fa-solid fa-unlock-keyhole"></i></a></li>
+            <li title="Set Password Policy"><a class="has-text-white is-size-6 has-text-centered" id="setPolicyBtn" style="border-top: 2px solid white; border-bottom: 2px solid white;"><i class="fa-sharp fa-solid fa-clipboard-list"></i></a></li>  
+            <li title="Run Rainbow Test on Password"><a class="has-text-white is-size-6 has-text-centered" id="testPWDBtn" style="border-bottom: 2px solid white;"><i class="fa-solid fa-flask-vial"></i></a></li>
+            <li title="Site Info"><a class="has-text-white is-size-6 has-text-centered" id="siteInfoBtn"><i class="fa-solid fa-circle-info"></i></a></li>
             
            <!-- <li><a class="has-text-white is-size-4 has-text-centered"><i class="fa-solid fa-file-pen"></i></a></li> -->
            <!-- <li><a class="has-text-white is-size-4 has-text-centered"><i class="fa-sharp fa-solid fa-share-nodes"></i></a></li> -->
         </ul>
     </div>
- 
-    <div class="column hero-body has-background-grey-lighter is-flex is-flex-direction-row is-flex-wrap-wrap is-justify-content-center">
+  
+    <div class="column hero-body has-background-grey-lighter is-flex is-flex-direction-row is-flex-wrap-wrap is-justify-content-center mt-0">
+    
       <div class="card m-2" style="height:100px;width:400px;">
-                <header class="card-header">
-                <p class="card-header-title">
-                    Component
-                </p>
-                <button class="card-header-icon" aria-label="more options" title="More Options">
-                    <span class="icon">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </span>
-                </button>
-                </header>
-                <footer class="card-footer">
-                        <a href="#" class="card-footer-item is-size-6">Send to Clipboard</a>
-                        <a href="#" class="card-footer-item">Delete</a>
-                </footer>
-            </div>
+          <header class="card-header  has-background-black">
+          <p class="card-header-title  has-text-white">
+              123456789123456789123456789123456789
+          </p>
+          <button class="card-header-icon" aria-label="more options" title="More Options">
+              <span class="icon has-text-white">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+              </span>
+          </button>
+          </header>
+          <footer class="card-footer">
+                  <a href="#" class="card-footer-item is-size-6 has-text-black has-text-weight-semibold">Send to Clipboard</a>
+                  <a href="#" class="card-footer-item has-text-black has-text-weight-semibold">View</a>
+          </footer>
+       </div>
             <div class="card m-2" style="height:100px;width:400px;">
                 <header class="card-header">
                 <p class="card-header-title">
@@ -138,6 +155,7 @@
     </div>
 
 </div>
+
 <div class="modal" id="addPassModal">
   <div class="modal-background"></div>
   <div class="modal-card">
@@ -148,37 +166,37 @@
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Name</label>
         <div class="control">
-          <input class="input is-small" type="text" id="addPassModalName"></input>
+          <input class="input is-small" type="text" id="addPassModalName" maxlength="36"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Username</label>
         <div class="control">
-          <input class="input is-small" type="text" id="addPassModalUname"></input>
+          <input class="input is-small" type="text" id="addPassModalUname" maxlength="40"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Password</label>
         <div class="control">
-          <input class="input is-small" type="password" id="addPassModalPWD"></input>
+          <input class="input is-small" type="password" id="addPassModalPWD" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Confirm Password</label>
         <div class="control">
-          <input class="input is-small" type="password"  id="addPassModalPWD2"></input>
+          <input class="input is-small" type="password"  id="addPassModalPWD2" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">URL</label>
         <div class="control">
-          <input class="input is-small" type="password" id="addPassModalURL"></input>
+          <input class="input is-small" type="password" id="addPassModalURL" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Label</label>
         <div class="control">
-          <input class="input is-small" type="password" id="addPassModalLabel"></input>
+          <input class="input is-small" type="password" id="addPassModalLabel" maxlength="40"></input>
         </div>
       </div>
       
@@ -200,37 +218,37 @@
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Name</label>
         <div class="control">
-          <input class="input is-small" type="text" id="editPassModalName"></input>
+          <input class="input is-small" type="text" id="editPassModalName" maxlength="36"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Username</label>
         <div class="control">
-          <input class="input is-small" type="text" id="editPassModalUname"></input>
+          <input class="input is-small" type="text" id="editPassModalUname" maxlength="40"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Password</label>
         <div class="control">
-          <input class="input is-small" type="password" id="editPassModalPWD"></input>
+          <input class="input is-small" type="password" id="editPassModalPWD" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Confirm Password</label>
         <div class="control">
-          <input class="input is-small" type="password"  id="editPassModalPWD2"></input>
+          <input class="input is-small" type="password"  id="editPassModalPWD2" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">URL</label>
         <div class="control">
-          <input class="input is-small" type="password" id="editPassModalURL"></input>
+          <input class="input is-small" type="password" id="editPassModalURL" maxlength="64"></input>
         </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Label</label>
         <div class="control">
-          <input class="input is-small" type="password" id="addPassModalLabel"></input>
+          <input class="input is-small" type="password" id="addPassModalLabel" maxlength="40"></input>
         </div>
       </div>
       
@@ -242,6 +260,177 @@
     </footer>
   </div>
 </div>
+
+
+<div class="modal" id="viewOTPModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Onetime Password</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="box has-text-centered has-text-weight-semi-bold" id="viewOTPOutput"></div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="viewOTPSendToClipboardBtn">Send to Clipboard</button>
+      <button class="button" id="viewOTPCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="viewPWDModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">View Password</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="box has-text-centered has-text-weight-semi-bold" id="viewPWDOutput"></div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="viewPWDSendToClipboardBtn">Send to Clipboard</button>
+      <button class="button" id="viewPWDCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="viewOTPModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Onetime Password</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="box has-text-centered has-text-weight-semi-bold" id="viewOTPOutput"></div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="viewOTPSendToClipboardBtn">Send to Clipboard</button>
+      <button class="button" id="viewOTPCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="useOTPModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Retrieve Password using OTP</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Enter OTP</label>
+        <div class="control">
+          <input class="input is-small" type="password" id="useOTPInput" maxlength="6"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Password</label>
+        <div class="control">
+          <div class="box has-text-centered has-text-weight-semi-bold" id="useOTPOutput"></div>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="useOTPRetrieveBtn">Retrieve Password</button>
+      <button class="button" id="useOTPClearBtn">Clear Form</button>
+      <button class="button" id="useOTPCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="setPolicyModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Set Password Policy</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Length</label>
+        <div class="control">
+          <input class="input is-small" type="text" id="addPassModalName" maxlength="36"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Special Characters</label>
+        <div class="control">
+          <input class="input is-small" type="text" id="addPassModalUname" maxlength="40"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Uppercase</label>
+        <div class="control">
+          <input class="input is-small" type="password" id="addPassModalPWD" maxlength="64"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Lowercase</label>
+        <div class="control">
+          <input class="input is-small" type="password"  id="addPassModalPWD2" maxlength="64"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Numbers</label>
+        <div class="control">
+          <input class="input is-small" type="password" id="addPassModalURL" maxlength="64"></input>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="savePWDPolicyBtn">Save</button>
+      <button class="button" id="pwdPolicyCancelBtn">Cancel</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="testPWDModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Test Password Against Rainbow Tables</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Enter Password</label>
+        <div class="control">
+          <input class="input is-small" type="text" id="testPWDModalPassword" maxlength="64"></input>
+        </div>
+      </div>
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Result</label>
+        <div class="control">
+          <input class="input is-small" type="text" id="testPWDModal"></input>
+        </div>
+      </div>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="runTestPWDModalBtn">Run Test</button>
+      <button class="button" id="testPWDModalCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="siteInfoModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-4 has-text-weight-bold">Site Information</div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="is-size-6 has-text-weight-bold">Block of information</label>
+        <div class="control">
+          <input class="input is-small" type="text" id="testPWDModalPassword" maxlength="64"></input>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button" id="siteInfoModalCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+
+
+
 <script src="/js/dashboard.js"></script>
 
 

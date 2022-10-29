@@ -2,30 +2,35 @@
   {
     "passphrase": "SuperDuperSecret1",
     "url": "https://www.bank.com",
+    "name": "Bank.com",
     "encrypted_pwdId": 1,
     "userId": 1
   },
   {
     "passphrase": "SuperDuperSecret2",
     "url": "https://www.job.com",
+    "name": "Job.com",
     "encrypted_pwdId": 2,
     "userId": 2
   },
   {
     "passphrase": "SuperDuperSecret3",
     "url": "https://www.car.com",
+    "name": "Car.com",
     "encrypted_pwdId": 3,
     "userId": 3
   },
   {
     "passphrase": "SuperDuperSecret4",
     "url": "https://www.swosh.com",
+    "name": "Swosh",
     "encrypted_pwdId": 4,
     "userId": 4
   },
   {
     "passphrase": "SuperDuperSecret5",
     "url": "https://www.plane.com",
+    "name": "Plane.com",
     "encrypted_pwdId": 5,
     "userId": 5
   }

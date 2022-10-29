@@ -1,0 +1,8 @@
+.menu-list li a:hover {
+    background-color:hsl(141, 71%, 48%) !important;
+}
+
+.navbar-start a:hover {
+    background-color: hsl(141, 71%, 48%)!important;
+    color: white !important;
+}

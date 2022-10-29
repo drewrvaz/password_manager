@@ -1,6 +1,5 @@
 const crypto = require('crypto-js');
 const bcrypt = require('bcrypt');
-const { Passphrase } = require('../models');
 
 const encryptPWD = (pwd, passphrase) => {
   var encrypted = crypto.AES.encrypt(pwd, passphrase);

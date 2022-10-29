@@ -17,7 +17,11 @@ Passphrase.init(
       allowNull: false,
     },
     url: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(64),
+      allowNull: true,
+    },
+    name: {
+      type: DataTypes.STRING(36) ,
       allowNull: false,
     },
   },
