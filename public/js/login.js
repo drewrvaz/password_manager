@@ -16,11 +16,12 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/');
-      // alert("Successfully logged in!");
-      document.querySelector('#loginMessage').removeclass("is-disable").text("Successfully logged in!");
     } else {
-      alert('Failed to log in');
+      $('#loginMessage').text("Failed to login");
     }
+  } else {
+    $('#loginMessage').text("You need to enter your username and password. Please try again!");
+
   }
 };
 
