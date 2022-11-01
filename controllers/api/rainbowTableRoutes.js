@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 // Create new rainbow table
 router.post('/', (req, res) => {
   RainbowTable.create({
-    hash: req.body.hash,
+    password: req.body.password,
   })
   .then((dbRainbowTable) => res.status(200).json(dbRainbowTable))
   .catch((err) => {

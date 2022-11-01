@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const bcrypt = require('bcrypt');
 
 class RainbowTable extends Model {}
 
@@ -12,29 +11,29 @@ RainbowTable.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    hash: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     }
   },
   {
-    hooks: {
-      beforeCreate: async (newRainbowData) => {
-        newRainbowData.hash = await bcrypt.hash(newRainbowData.hash, 10);
-        return newRainbowData;
-      },
-    },
-    
-      sequelize,
-      timestamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: 'rainbowtable',
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'rainbowtable',
   }
 );
 
 module.exports = RainbowTable;
 
+// const bcrypt = require('bcrypt');
+// hooks: {
+//   beforeCreate: async (newRainbowData) => {
+//     newRainbowData.hash = await bcrypt.hash(newRainbowData.hash, 10);
+//     return newRainbowData;
+//   },
+// },
 // {
 //   hooks: {
 //     beforeCreate: async (newUserData) => {

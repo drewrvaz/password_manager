@@ -6,9 +6,9 @@ const encryptPWD = (pwd, passphrase) => {
   return encrypted.toString();
 };
 
-const decryptPWD = async (pwd, passphrase) => {
-  var decrypted = await crypto.AES.encrypt(pwd, passphrase);
-  return decrypted.toString();
+const decryptPWD = (pwd, passphrase) => {
+  var decrypted = crypto.AES.decrypt(pwd, passphrase);
+  return decrypted.toString(crypto.enc.Utf8);
 };
 
 const onetimePasscode = () => {

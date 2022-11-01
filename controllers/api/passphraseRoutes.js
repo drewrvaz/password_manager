@@ -3,7 +3,7 @@ const { Passphrase } = require('../../models');
 
 // GET all passphrases
 router.get('/', (req, res) => {
-  Passphrase.findall()
+  Passphrase.findAll()
   .then((dbPassphraseData) => res.status(200).json(dbPassphraseData))
   .catch((err) => {
     console.log(err);
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 });
 
 // Get one passphrase
-router.get('./:id', (req, res)=> {
+router.get('/:id', (req, res)=> {
   Passphrase.findByPk(req.params.id)
   .then((dbPassphraseData) => res.status(200).json(dbPassphraseData))
   .catch((err) => {
@@ -25,7 +25,9 @@ router.get('./:id', (req, res)=> {
 router.post('/', (req, res) => {
   Passphrase.create({
     passphrase: req.body.passphrase,
-    url: req.body.url
+    url: req.body.url,
+    name: req.body.name,
+    userId: req.body.userId
   })
   .then((dbPassphraseData) => res.status(200).json(dbPassphraseData))
   .catch((err) => {

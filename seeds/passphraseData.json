@@ -3,35 +3,45 @@
     "passphrase": "SuperDuperSecret1",
     "url": "https://www.bank.com",
     "name": "Bank.com",
+    "username": "user1",
     "encrypted_pwdId": 1,
-    "userId": 1
+    "userId": 1,
+    "label_id": 1
   },
   {
     "passphrase": "SuperDuperSecret2",
     "url": "https://www.job.com",
     "name": "Job.com",
+    "username": "user2",
     "encrypted_pwdId": 2,
-    "userId": 2
+    "userId": 2,
+    "label_id": 1
   },
   {
     "passphrase": "SuperDuperSecret3",
     "url": "https://www.car.com",
     "name": "Car.com",
+    "username": "user3",
     "encrypted_pwdId": 3,
-    "userId": 3
+    "userId": 3,
+    "label_id": 1
   },
   {
     "passphrase": "SuperDuperSecret4",
     "url": "https://www.swosh.com",
     "name": "Swosh",
+    "username": "user4",
     "encrypted_pwdId": 4,
-    "userId": 4
+    "userId": 4,
+    "label_id": 1
   },
   {
     "passphrase": "SuperDuperSecret5",
     "url": "https://www.plane.com",
     "name": "Plane.com",
+    "username": "user5",
     "encrypted_pwdId": 5,
-    "userId": 5
+    "userId": 5,
+    "label_id": 1
   }
 ]

@@ -3,7 +3,17 @@ const { EncryptedPwd } = require('../../models');
 
 // GET all encrypted passwords
 router.get('/', (req, res) => {
-  EncryptedPwd.findall()
+  EncryptedPwd.findAll()
+  .then((dbEncryptedPwd) => res.status(200).json(dbEncryptedPwd))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
+// Get one passphrase
+router.get('/:id', (req, res)=> {
+  EncryptedPwd.findByPk(req.params.id)
   .then((dbEncryptedPwd) => res.status(200).json(dbEncryptedPwd))
   .catch((err) => {
     console.log(err);
@@ -14,7 +24,8 @@ router.get('/', (req, res) => {
 // Create new encrypted password
 router.post('/', (req, res) => {
   EncryptedPwd.create({
-    encrypted_pwd: req.body.encrypted_password
+    encrypted_password: req.body.encrypted_password,
+    passphraseId: req.body.passphraseId,
   })
   .then((dbEncryptedPwd) => res.status(200).json(dbEncryptedPwd))
   .catch((err) => {
