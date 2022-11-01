@@ -28,6 +28,7 @@ npm install; bcrypt, sequelize, dotenv, express, handlebars, mysql, crypto-js, a
 
 If using on the web:
 Create an account and starting saving your passwords!
+Live link: https://obscure-oasis-37160.herokuapp.com/dashboard
 
 ## Usage
 If using in command line:
