@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
+const moment = require('moment');
 
 router.post('/login', async (req, res) => {
   try {
@@ -21,13 +22,24 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    let lastDate = moment(userData.lastLoggedIn).format('MM-DD-YYYY HH:mm:ss');
+    console.log(lastDate);
+
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
+      req.session.lastlogged_in = lastDate;
       req.session.logged_in = true;
       
       res.json({ user: userData, message: 'You are now logged in!' });
     });
+
+//     var date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
+//     var stillUtc = moment.utc(date).toDate();
+// var local = moment(stillUtc).local().format('YYYY-MM-DD HH:mm:ss');
+
+    await User.update({lastLoggedIn: moment().format('YYYY-MM-DD HH:mm:ss')},{ where: { username: req.body.username } });
 
   } catch (err) {
     res.status(400).json(err);

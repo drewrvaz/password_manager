@@ -427,3 +427,52 @@ $("#savePWDPolicyBtn").on("click", async function() {
         })
 
 });
+
+// $("#changeAvatarBtn").on("click", function() {
+//   $("#changeAvatarModal").addClass('is-active');
+// });
+
+$("#labelFilterBtn").on("click", async function() {
+  const loc = document.location;
+  const data = {
+    name: $("#labelSelect").val()
+  };
+  if ($("#labelSelect").val() === "All") {
+    for (let i = 0; i < $(".card").length; i++){
+      let element = $(".card")[i];
+      element.style.display = "block";
+      // console.log($(".card")[i]);
+    }
+
+  } else {
+    await fetch(`${loc.origin}/labelNameToId`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(res => res.json())
+  .then(res => { 
+  
+    console.log(res);
+    if (res.id) {
+      let className = "label-" + res.id.toString();
+
+      for (let i = 0; i < $(".card").length; i++){
+       let element = $(".card")[i];
+
+        if (element.classList.contains(className)) element.style.display = "block";
+        else element.style.display = "none";
+      }
+    }
+    else console.log("Error getting id")
+  
+  })
+
+  }
+ 
+  
+
+  
+});
