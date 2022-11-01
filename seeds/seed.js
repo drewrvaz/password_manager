@@ -1,13 +1,14 @@
 const sequelize = require('../config/connection');
-const { User, Passphrase, EncryptedPwd, OneTimePasscode, SearchContent, RainbowTable, Avatar } = require('../models');
+const { User, Passphrase, EncryptedPwd, OneTimePasscode, RainbowTable, Avatar, Label, Policy } = require('../models');
 
 const userData = require('./userData.json');
 const passphraseData = require('./passphraseData.json');
 const encrypted_pwdData = require('./encrypted_passwordData.json');
 const otpData = require('./onetime_passcodeData.json');
-const searchcontentData = require('./search_contentData.json');
 const rainbowtableData = require('./rainbow_tableData.json');
 const avatarData = require('./avatarData.json');
+const labelData = require('./labelData.json');
+const policyData = require('./policyData.json');
 
 
 const seedDatabase = async () => {
@@ -20,10 +21,14 @@ const seedDatabase = async () => {
     returning: true,
   });
 
+  await Label.bulkCreate(labelData);
+
   await Passphrase.bulkCreate(passphraseData, {
     individualHooks: true,
     returning: true,
   });
+
+
 
   await EncryptedPwd.bulkCreate(encrypted_pwdData, {
     individualHooks: true,
@@ -31,11 +36,11 @@ const seedDatabase = async () => {
   });
 
   await OneTimePasscode.bulkCreate(otpData);
-  await SearchContent.bulkCreate(searchcontentData);
-  await RainbowTable.bulkCreate(rainbowtableData, {
-    individualHooks: true,
-    returning: true,
-  });
+ 
+  // await RainbowTable.bulkCreate(rainbowtableData, {
+  //   individualHooks: true,
+  //   returning: true,
+  // });
   
 
   process.exit(0);

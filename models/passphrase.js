@@ -24,6 +24,16 @@ Passphrase.init(
       type: DataTypes.STRING(36) ,
       allowNull: false,
     },
+    username: {
+      type: DataTypes.STRING(40) ,
+      allowNull: true,
+    },
+    label_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique:false,
+    },
+
   },
   {
     hooks: {
@@ -42,6 +52,9 @@ Passphrase.init(
 
 module.exports = Passphrase;
 
+
+
+// },
 // password_id: {
 //   type: DataTypes.INTEGER,
 //   references: {

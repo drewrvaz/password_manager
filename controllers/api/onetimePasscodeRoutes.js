@@ -1,6 +1,27 @@
 const router = require('express').Router();
 const { OneTimePasscode } = require('../../models');
 
+
+// GET all passphrases
+router.get('/', (req, res) => {
+  OneTimePasscode.findAll()
+  .then((dbOneTimePasscode) => res.status(200).json(dbOneTimePasscode))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
+// Get one passphrase
+router.get('/:id', (req, res)=> {
+  OneTimePasscode.findByPk(req.params.id)
+  .then((dbOneTimePasscode) => res.status(200).json(dbOneTimePasscode))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
 // Create new onetime passcode
 router.post('/', (req, res) => {
 

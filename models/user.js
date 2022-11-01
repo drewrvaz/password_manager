@@ -28,6 +28,11 @@ User.init(
         len: [8],
       },
     },
+    lastLoggedIn: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: DataTypes.NOW
+    },
   },
   {
     hooks: {
