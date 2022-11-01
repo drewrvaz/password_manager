@@ -1,3 +1,4 @@
+// Open Add Password Card Modal
 $("#addPassBtn").on("click", function() {
   $("#addPassModalName").val("");
   $("#addPassModalUname").val("");
@@ -10,6 +11,7 @@ $("#addPassBtn").on("click", function() {
   $("#addPassModal").addClass('is-active');
 });
 
+// Save Password Card 
 $("#addPassSaveBtn").on("click", async function() {
   
   $("#addPassModalMsg").empty();
@@ -65,21 +67,29 @@ $("#addPassSaveBtn").on("click", async function() {
   } else $("#addPassModalMsg").append(error);
       
 });
-  
+
+// Close Add Password Modal
 $("#addPassCloseBtn").on("click", function() {
   const loc = document.location;
   $("#addPassModal").removeClass('is-active');
   loc.reload();
 });
 
+
+
+
+
+//  Open Site Information Modal
 $("#siteInfoBtn").on("click", function() {
   $("#siteInfoModal").addClass('is-active');
 });
 
+//  Close Site Information Modal
 $("#siteInfoModalCloseBtn").on("click", function() {
   $("#siteInfoModal").removeClass('is-active');
 });
 
+// Send Password to Clipboard, creates one for each password card
 $(".passphraseClipboard").on("click", async function() {
   const loc = document.location;
   let password = "";
@@ -106,6 +116,7 @@ $(".passphraseClipboard").on("click", async function() {
 
 });
 
+// Opens Password Modal, creates one for each password card
 $(".passphraseView").on("click", async function() {
   const loc = document.location;
   $("#viewPWDModal").addClass('is-active');
@@ -131,10 +142,12 @@ $(".passphraseView").on("click", async function() {
   
 });
 
+// Closes Password Modal
 $("#viewPWDCloseBtn").on("click", function() {
   $("#viewPWDModal").removeClass('is-active');
 });
 
+// Delete Card Dropdown option, creates one for each card
 $(".DeletePassword").on("click", async function() {
   const loc = document.location;
   $("#viewDeleteStatusMsg").empty();
@@ -164,12 +177,14 @@ $(".DeletePassword").on("click", async function() {
 
 });
 
+// Delete Status Modal
 $("#viewDeleteStatusBtn").on("click", function() {
   const loc = document.location;
   $("#viewDeleteStatus").removeClass('is-active');
   loc.reload();
 });
 
+// Share Password drop down option
 $(".SharePassword").on("click", async function() {
   const loc = document.location;
   $("#viewOTPOutput").empty();
@@ -191,41 +206,42 @@ $(".SharePassword").on("click", async function() {
       console.log(res);
 
       if (res.passcode) {
-        // console.log("Delete was successful");
         $("#viewOTPOutput").append(res.passcode);
       } else {
-        // console.log("Delete was unsuccessful");
         $("#viewOTPOutput").append("Could not retrieve OTP");
       }
-
       $("#viewOTPModal").addClass('is-active');
 
     });
 
 });
 
+// Close OTP Modal
 $("#viewOTPCloseBtn").on("click", function() {
   const loc = document.location;
   $("#viewOTPModal").removeClass('is-active');
 });
 
+// Send OTP to clipboard then close
 $("#viewOTPSendToClipboardBtn").on("click", function() {
   const passcode = $("#viewOTPOutput").text();
   navigator.clipboard.writeText(passcode);
   $("#viewOTPModal").removeClass('is-active');
 });
 
-
+// Open Retrieve Password using OTP Modal
 $("#retrivePassOTPBtn").on("click", function() {
   $("#useOTPInput").val("");
   $("#useOTPOutput").empty();
   $("#useOTPModal").addClass('is-active');
 });
 
+// Close Retrieve Password using OTP Modal
 $("#useOTPCloseBtn").on("click", function() {
   $("#useOTPModal").removeClass('is-active');
 });
 
+// Get Password using OTP
 $("#useOTPRetrieveBtn").on("click", async function() {
   const loc = document.location;
   $("#useOTPOutput").empty();
@@ -255,13 +271,14 @@ $("#useOTPRetrieveBtn").on("click", async function() {
     });
 });
 
-
+// Send Password to Clip for Retrieve OTP Modal
 $("#useOTPSendToClipBoard").on("click", function() {
   const password = $("#useOTPOutput").text();
   navigator.clipboard.writeText(password);
   $("#useOTPModal").removeClass('is-active');
 });
 
+// Open Edit Password Modal
 $(".EditPassword").on("click", async function() {
   const loc = document.location;
   $("#editPassModalName").val("");
@@ -297,6 +314,7 @@ $(".EditPassword").on("click", async function() {
 
 });
 
+// Edit Password Card 
 $("#editPassSaveBtn").on("click", async function() {
   $("#editPassModalMsg").empty();
   const loc = document.location;
@@ -333,6 +351,7 @@ $("#editPassSaveBtn").on("click", async function() {
       
 });
 
+// Close Edit Password Modal
 $("#editPassCancelBtn").on("click", function() {
   $("#editPassModal").removeClass('is-active');
 });
@@ -378,23 +397,28 @@ $("#runTestPWDModalBtn").on("click", async function() {
       
 });
 
+
+// Set Password Policy Length Slider 
 var slider = document.getElementById("setPolicyModalLength");
 var output = document.getElementById("pwdLengthValue");
 output.innerHTML = slider.value; // Display the default slider value
 
-// Update the current slider value (each time you drag the slider handle)
+// Update the current slider value (each time you drag the slider handle
 slider.oninput = function() {
   output.innerHTML = this.value;
 }
 
+//Open Set Policy
 $("#setPolicyBtn").on("click", function() {
   $("#setPolicyModal").addClass('is-active');
 });
 
+//Close Set Policy
 $("#pwdPolicyCancelBtn").on("click", function() {
   $("#setPolicyModal").removeClass('is-active');
 });
 
+//Save Password Policy
 $("#savePWDPolicyBtn").on("click", async function() {
   
   $("#setPolicyOutput").empty();
@@ -419,8 +443,6 @@ $("#savePWDPolicyBtn").on("click", async function() {
         })
         .then(res => res.json())
         .then(res => { 
-
-          // console.log(res);
           if (res.message === "Success") $("#setPolicyOutput").append(success);
           else $("#setPolicyOutput").append(error);
     
@@ -428,10 +450,7 @@ $("#savePWDPolicyBtn").on("click", async function() {
 
 });
 
-// $("#changeAvatarBtn").on("click", function() {
-//   $("#changeAvatarModal").addClass('is-active');
-// });
-
+//Filter based on dropdown of labels
 $("#labelFilterBtn").on("click", async function() {
   const loc = document.location;
   const data = {
@@ -472,7 +491,4 @@ $("#labelFilterBtn").on("click", async function() {
 
   }
  
-  
-
-  
 });
