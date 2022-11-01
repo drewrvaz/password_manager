@@ -1,22 +1,24 @@
 <div class="field has-addons has-background-grey-lighter" style="margin-bottom:0;margin-left:80px;">
   <div class="control is-expanded">
     <div class="select is-fullwidth is-small">
-      <select name="label">
-        <option value="All">All</option>
+      <select name="label" id="labelSelect">
+        
+        {{#each labels as | label|}}
+            <option>{{label.name}}</option>
+          {{/each}}
       </select>
     </div>
   </div>
   <div class="control">
-    <button type="submit" class="button is-success is-small has-text-weight-semibold">Filter</button>
+    <button type="submit" class="button is-success is-small has-text-weight-semibold" id="labelFilterBtn">Filter</button>
   </div>
 </div>
 
-<div class="hero has-background-grey-lighter has-text-black is-size-7 has-text-right" style="margin-bottom:0;margin-left:80px;" id="sessionUser">username: {{username}}</div>
-<!-- <div class="hero has-background-grey-lighter has-text-black is-size-7 has-text-right" style="margin-bottom:0;margin-left:80px;" id="sessionLastLogin">last login at:</div> -->
+<div class="hero has-background-grey-lighter has-text-black is-size-7 has-text-right" style="margin-bottom:0;margin-left:80px;" id="sessionUser">user: {{username}} | last logged in: {{lastlogged_in}}</div>
 
 <div class="columns is-mobile m-0"  style="min-height:690px;width:100%;overflow: auto;">
     <div class="column is-1" style="width:80px;resize: none;">
-      <p class="has-text-white is-size-4 has-text-centered" style="display: inline-block;border-radius: 60px;box-shadow: 0 0 4px white;padding: 0.5em 0.6em;margin-top:-10px;margin-bottom:20px;"><i class="fa-solid fa-user"></i></p> 
+     <!-- <p class="has-text-white is-size-4 has-text-centered" style="display: inline-block;border-radius: 60px;box-shadow: 0 0 4px white;padding: 0.5em 0.6em;margin-top:-10px;margin-bottom:20px;"><i class="fa-solid fa-user"></i></p> -->
         <ul class="menu-list">
             <li title="Add Password"><a class="has-text-white is-size-6 has-text-centered" id="addPassBtn"><i class="fa-solid fa-circle-plus"></i></a></li>
             <li title="Retieve Password with OTP"><a class="has-text-white is-size-6 has-text-centered" id="retrivePassOTPBtn" style="border-top: 2px solid white;"><i class="fa-solid fa-unlock-keyhole"></i></a></li>
@@ -24,15 +26,13 @@
             <li title="Run Rainbow Test on Password"><a class="has-text-white is-size-6 has-text-centered" id="testPWDBtn" style="border-bottom: 2px solid white;"><i class="fa-solid fa-flask-vial"></i></a></li>
             <li title="Site Info"><a class="has-text-white is-size-6 has-text-centered" id="siteInfoBtn"><i class="fa-solid fa-circle-info"></i></a></li>
             
-           <!-- <li><a class="has-text-white is-size-4 has-text-centered"><i class="fa-solid fa-file-pen"></i></a></li> -->
-           <!-- <li><a class="has-text-white is-size-4 has-text-centered"><i class="fa-sharp fa-solid fa-share-nodes"></i></a></li> -->
         </ul>
     </div>
   
     <div class="column hero-body has-background-grey-lighter is-flex is-flex-direction-row is-flex-wrap-wrap is-justify-content-center mt-0">
     
       {{#each passphrases as |passphrase|}}
-      <div class="card m-2" style="height:100px;width:400px;">
+      <div class="card m-2 label-{{passphrase.label_id}}" style="height:100px;width:400px;">
           <header class="card-header  has-background-black">
           <p class="card-header-title  has-text-white">
               {{passphrase.name}}
@@ -313,12 +313,25 @@
       <div class="is-size-4 has-text-weight-bold">Site Information</div> 
     </header>
     <section class="modal-card-body">
-      <div class="field">
-        <label class="is-size-6 has-text-weight-bold">Block of information</label>
-        <div class="control">
-          <input class="input is-small" type="text" id="siteInfoModalInfo" maxlength="64"></input>
+        <div class="block">
+          The clicking on icons on the aside will do the following.
         </div>
-      </div>
+        <div class="block">
+          <i class="fa-solid fa-circle-plus"></i> ->> Add new password card to the dashboard
+        </div>
+        <div class="block">
+          <i class="fa-solid fa-unlock-keyhole"></i> ->> Retreive a shared password using a one-time passcode
+        </div>
+        <div class="block">
+          <i class="fa-sharp fa-solid fa-clipboard-list"></i> ->> Edit the password policy on your account
+        </div>
+        <div class="block">
+          <i class="fa-solid fa-flask-vial"></i> ->> Test a password against a database of common passwords
+        </div>
+        <div class="block">
+          <i class="fa-solid fa-circle-info"></i> ->> Launch this site information page
+        </div>
+     
     </section>
     <footer class="modal-card-foot">
       <button class="button" id="siteInfoModalCloseBtn">Close</button>
@@ -340,6 +353,32 @@
     </footer>
   </div>
 </div>
+
+<!--
+<div class="modal" id="changeAvatarModal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <div class="is-size-5 has-text-weight-bold">Change </div> 
+    </header>
+    <section class="modal-card-body">
+      <div class="has-text-weight-semi-bold">Select an avatar from the options below.</div>
+      <div class="select">
+        <select>
+          {{#each avatars as | avatar|}}
+            <option>{{avatar.name}}</option>
+          {{/each}}
+          </select> 
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="changeAvatarSaveBtn">Save</button>
+      <button class="button" id="changeAvatarCloseBtn">Close</button>
+    </footer>
+  </div>
+</div>
+-->
+
 
 
 <script src="/js/dashboard.js"></script>

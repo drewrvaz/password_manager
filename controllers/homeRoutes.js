@@ -41,7 +41,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const passphraseData = await Passphrase.findAll({ where: { userId: req.session.user_id } });
     const passphrases = passphraseData.map((passphrase) => passphrase.get({ plain: true }));
-    res.render('dashboard', { username: req.session.username, passphrases, logged_in: req.session.logged_in,});
+
+    const labelData = await Label.findAll();
+    const labels = labelData.map((label) => label.get({ plain: true }));
+
+    res.render('dashboard', { username: req.session.username, passphrases, logged_in: req.session.logged_in, lastlogged_in: req.session.lastlogged_in, labels,});
 
   } catch (err) {
     res.status(500).json(err);
@@ -275,7 +279,7 @@ router.post('/testPWD', withAuth, async (req, res) => {
   }
 });
 
-router.post('/setPolicy', async (req, res) => { //withAuth
+router.post('/setPolicy', withAuth, async (req, res) => { 
 
   try {
     var policyData = await Policy.findOne({
@@ -309,6 +313,27 @@ router.post('/setPolicy', async (req, res) => { //withAuth
       
       res.status(200).json({message:"Success"});
     } else res.status(400).json({message:"Bad Request"});
+
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+router.post('/labelNameToId', async (req, res) => { //withAuth
+
+  try {
+    var labelData = await Label.findOne({
+      where: {
+        name: req.body.name
+      }
+    });
+
+    if (req.body) {
+      if (labelData.id) res.status(200).json({id:labelData.id});
+      else res.status(400).json({message:"Bad Request"});
+    }
 
   }
   catch (err) {
