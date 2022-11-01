@@ -35,6 +35,7 @@ router.get('/signup', (req, res) => {
 
 });
 
+// get all password cards and display them on the dashboard
 router.get('/dashboard', withAuth, async (req, res) => {
 
   try {
@@ -53,6 +54,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
 });
 
+// create a password card
 router.post('/dashboard', withAuth, async (req, res) => {
 
   try {
@@ -104,6 +106,7 @@ router.post('/dashboard', withAuth, async (req, res) => {
 
 });
 
+// Get PWD using passphrase
 router.post('/retrievePWD', withAuth, async (req, res) => {
 
   try {
@@ -117,6 +120,7 @@ router.post('/retrievePWD', withAuth, async (req, res) => {
 
 });
 
+// Get an OTP associated with a passphrase/password
 router.post('/retrieveOTP', withAuth, async (req, res) => {
 
   try {
@@ -138,11 +142,8 @@ router.post('/retrieveOTP', withAuth, async (req, res) => {
     }
     else {
       otpData = await OneTimePasscode.create(data);
-      console.log("here");
     }
 
-    // console.log({"passcode":passcode});
-    console.log("Here");
     res.status(200).json({"passcode":passcode});
   } catch (err) {
     res.status(500).json(err);
@@ -150,6 +151,7 @@ router.post('/retrieveOTP', withAuth, async (req, res) => {
 
 });
 
+// Retrieve pwd using otp
 router.post('/useOTPretrievePWD', withAuth, async (req, res) => { //withAuth
 
   try {
@@ -169,6 +171,7 @@ router.post('/useOTPretrievePWD', withAuth, async (req, res) => { //withAuth
   }
 });
 
+// get password card information using a passphrase id
 router.get('/editPWD/:id', async (req, res) => { //withAuth
 
   try {
@@ -195,6 +198,7 @@ router.get('/editPWD/:id', async (req, res) => { //withAuth
 
 });
 
+//edit password card
 router.post('/editPWD', withAuth, async (req, res) => { 
 
   try {
@@ -254,6 +258,7 @@ router.post('/editPWD', withAuth, async (req, res) => {
   }
 });
 
+//Test a pwd against a DB of common passwords
 router.post('/testPWD', withAuth, async (req, res) => { 
 
   try {
@@ -279,49 +284,52 @@ router.post('/testPWD', withAuth, async (req, res) => {
   }
 });
 
-router.post('/setPolicy', withAuth, async (req, res) => { 
+//set Password Policy
+// router.post('/setPolicy', withAuth, async (req, res) => { 
 
-  try {
-    var policyData = await Policy.findOne({
-      where: {
-        userId: req.session.user_id
-      }
-    });
+//   try {
+//     var policyData = await Policy.findOne({
+//       where: {
+//         userId: req.session.user_id
+//       }
+//     });
 
-    if (req.body) {
-      if (policyData) {
-        await Policy.update({
-          length: req.body.length,
-          special_char: req.body.special_char,
-          numbers: req.body.numbers,
-          lowercase: req.body.lowercase,
-          uppercase: req.body.uppercase,
-        },
-        {
-          where: {
-            userId: req.body.userId
-          }
-        });
-      } else await Policy.create({
-        length: req.body.length,
-        special_char: req.body.special_char,
-        numbers: req.body.numbers,
-        lowercase: req.body.lowercase,
-        uppercase: req.body.uppercase,
-        userId: req.session.user_id,
-      });
+//     if (req.body) {
+//       if (policyData) {
+//         await Policy.update({
+//           length: req.body.length,
+//           special_char: req.body.special_char,
+//           numbers: req.body.numbers,
+//           lowercase: req.body.lowercase,
+//           uppercase: req.body.uppercase,
+//         },
+//         {
+//           where: {
+//             userId: req.body.userId
+//           }
+//         });
+//       } else await Policy.create({
+//         length: req.body.length,
+//         special_char: req.body.special_char,
+//         numbers: req.body.numbers,
+//         lowercase: req.body.lowercase,
+//         uppercase: req.body.uppercase,
+//         userId: req.session.user_id,
+//       });
       
-      res.status(200).json({message:"Success"});
-    } else res.status(400).json({message:"Bad Request"});
+//       res.status(200).json({message:"Success"});
+//     } else res.status(400).json({message:"Bad Request"});
 
-  }
-  catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+//   }
+//   catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
 
-router.post('/labelNameToId', async (req, res) => { //withAuth
+
+//Retrieve Label id using its name
+router.post('/labelNameToId', withAuth, async (req, res) => { 
 
   try {
     var labelData = await Label.findOne({

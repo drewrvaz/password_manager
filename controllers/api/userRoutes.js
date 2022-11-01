@@ -35,10 +35,6 @@ router.post('/login', async (req, res) => {
       res.json({ user: userData, message: 'You are now logged in!' });
     });
 
-//     var date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
-//     var stillUtc = moment.utc(date).toDate();
-// var local = moment(stillUtc).local().format('YYYY-MM-DD HH:mm:ss');
-
     await User.update({lastLoggedIn: moment().format('YYYY-MM-DD HH:mm:ss')},{ where: { username: req.body.username } });
 
   } catch (err) {

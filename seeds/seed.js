@@ -8,7 +8,7 @@ const otpData = require('./onetime_passcodeData.json');
 const rainbowtableData = require('./rainbow_tableData.json');
 const avatarData = require('./avatarData.json');
 const labelData = require('./labelData.json');
-const policyData = require('./policy.json');
+// const policyData = require('./policy.json');
 
 
 const seedDatabase = async () => {
@@ -37,10 +37,10 @@ const seedDatabase = async () => {
 
   await OneTimePasscode.bulkCreate(otpData);
  
-  // await RainbowTable.bulkCreate(rainbowtableData, {
-  //   individualHooks: true,
-  //   returning: true,
-  // });
+  await RainbowTable.bulkCreate(rainbowtableData, {
+    individualHooks: true,
+    returning: true,
+  });
   
 
   process.exit(0);
