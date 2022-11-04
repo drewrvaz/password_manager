@@ -26,7 +26,7 @@
         <ul class="menu-list">
             <li title="Add Password"><a class="has-text-white is-size-6 has-text-centered" id="addPassBtn"><i class="fa-solid fa-circle-plus"></i></a></li>
             <li title="Retieve Password with OTP"><a class="has-text-white is-size-6 has-text-centered" id="retrivePassOTPBtn" style="border-top: 2px solid white;"><i class="fa-solid fa-unlock-keyhole"></i></a></li>
-            <!-- <li title="Set Password Policy"><a class="has-text-white is-size-6 has-text-centered" id="setPolicyBtn" style="border-top: 2px solid white; border-bottom: 2px solid white;"><i class="fa-sharp fa-solid fa-clipboard-list"></i></a></li> -->  
+            <li title="Set Password Policy"><a class="has-text-white is-size-6 has-text-centered" id="setPolicyBtn" style="border-top: 2px solid white; border-bottom: 2px solid white;"><i class="fa-sharp fa-solid fa-clipboard-list"></i></a></li> 
             <li title="Run Rainbow Test on Password"><a class="has-text-white is-size-6 has-text-centered" id="testPWDBtn" style="border-bottom: 2px solid white;"><i class="fa-solid fa-flask-vial"></i></a></li>
             <li title="Site Info"><a class="has-text-white is-size-6 has-text-centered" id="siteInfoBtn"><i class="fa-solid fa-circle-info"></i></a></li>
             
@@ -82,13 +82,13 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <div class="is-size-4 has-text-weight-bold">Create Entry</div> 
+      <div class="is-size-4 has-text-weight-bold">Create Password Card</div> 
     </header>
     <section class="modal-card-body">
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Name</label>
         <div class="control">
-          <input class="input is-small" type="text" id="addPassModalName" maxlength="36"></input>
+          <input class="input is-small is-danger" type="text" id="addPassModalName" maxlength="36"></input>
         </div>
       </div>
       <div class="field">
@@ -97,18 +97,26 @@
           <input class="input is-small" type="text" id="addPassModalUname" maxlength="40"></input>
         </div>
       </div>
+      <div class="is-size-7 is-italic">Password requirements: uppercase, lowercase<span id="addPassModalPWDConstraints">special, numbers, and length of 15</span></div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Password</label>
         <div class="control">
-          <input class="input is-small" type="password" id="addPassModalPWD" maxlength="64"></input>
+          <input class="input is-small is-danger" type="password" id="addPassModalPWD" maxlength="64"></input>
         </div>
+          <div class="control">
+            <button class="button is-success is-small has-text-weight-semibold" id="addGeneratePWDBtn">Generate Password</button>
+          </div>
       </div>
+
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Confirm Password</label>
         <div class="control">
-          <input class="input is-small" type="password"  id="addPassModalPWD2" maxlength="64"></input>
+          <input class="input is-small is-danger" type="password"  id="addPassModalPWD2" maxlength="64"></input>
         </div>
       </div>
+      <div class="is-size-7" id="addPassModalPWDMatch">Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span></div>
+      <div class="is-size-7" id="addPassModalPWDPolicy">Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span></div>
+      <br>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">URL</label>
         <div class="control">
@@ -122,7 +130,7 @@
         </div>
       </div>
 
-    <div class="has-text-centered has-text-primary is-size-7 has-text-weight-bold" id="addPassModalMsg"></div>
+    <div class="has-text-centered has-text-black is-size-7 has-text-weight-bold" id="addPassModalMsg"></div>
       
     </section>
     <footer class="modal-card-foot">
@@ -137,13 +145,13 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <div class="is-size-4 has-text-weight-bold">Edit Entry</div> 
+      <div class="is-size-4 has-text-weight-bold">Edit Password Card</div> 
     </header>
     <section class="modal-card-body">
       <div class="field">
-        <label class="is-size-6 has-text-weight-bold">Name</label>
+        <label class="is-size-6 has-text-weight-bold is-danger">Name</label>
         <div class="control">
-          <input class="input is-small" type="text" id="editPassModalName" maxlength="36"></input>
+          <input class="input is-small is-danger" type="text" id="editPassModalName" maxlength="36"></input>
         </div>
       </div>
       <div class="field">
@@ -152,18 +160,25 @@
           <input class="input is-small" type="text" id="editPassModalUname" maxlength="40"></input>
         </div>
       </div>
+      <div class="is-size-7 is-italic">Password requirements: uppercase, lowercase<span id="editPassModalPWDConstraints">, special, numbers, and length of 15</span></div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Password</label>
         <div class="control">
-          <input class="input is-small" type="password" id="editPassModalPWD" maxlength="64"></input>
+          <input class="input is-small is-danger" type="password" id="editPassModalPWD" maxlength="64"></input>
         </div>
+        <div class="control">
+            <button class="button is-success is-small has-text-weight-semibold" id="editGeneratePWDBtn">Generate Password</button>
+          </div>
       </div>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">Confirm Password</label>
         <div class="control">
-          <input class="input is-small" type="password"  id="editPassModalPWD2" maxlength="64"></input>
+          <input class="input is-small is-danger" type="password"  id="editPassModalPWD2" maxlength="64"></input>
         </div>
       </div>
+      <div class="is-size-7" id="editPassModalPWDMatch">Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span></div>
+      <div class="is-size-7" id="editPassModalPWDPolicy">Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span></div>
+      <br>
       <div class="field">
         <label class="is-size-6 has-text-weight-bold">URL</label>
         <div class="control">
@@ -177,7 +192,7 @@
         </div>
       </div>
 
-      <div class="has-text-centered has-text-primary is-size-7 has-text-weight-bold" id="editPassModalMsg"></div>
+      <div class="has-text-centered has-text-black is-size-7 has-text-weight-bold" id="editPassModalMsg"></div>
       
     </section>
     <footer class="modal-card-foot">
@@ -251,7 +266,7 @@
 
 <!-- Set Policy used with password generation -->
 
-<!--
+
 <div class="modal" id="setPolicyModal">
   <div class="modal-background"></div>
   <div class="modal-card">
@@ -275,25 +290,17 @@
           <input type="checkbox" id="setPolicyModalNumber">
             Numbers
           </label>
-        <label class="is-size-6 has-text-weight-bold">
-          <input type="checkbox" id="setPolicyModalUppercase">
-            Uppercase
-          </label>
-        <label class="is-size-6 has-text-weight-bold">
-          <input type="checkbox" id="setPolicyModalLowercase">
-            Lowercase
-          </label>
-
+          <div class="has-text-left is-italic is-size-6">Policy includes upper and lower case characters by default.</div>
+      
           <div class="box has-text-centered has-text-weight-semi-bold" id="setPolicyOutput"></div>
       
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success" id="savePWDPolicyBtn">Save</button>
-      <button class="button" id="pwdPolicyCancelBtn">Cancel</button>
+      <button class="button" id="pwdPolicyCancelBtn">Close</button>
     </footer>
   </div>
 </div>
--->
 
 <!-- Test PWD against common PWD DB -->
 <div class="modal" id="testPWDModal">
@@ -337,9 +344,9 @@
         <div class="block">
           <i class="fa-solid fa-unlock-keyhole"></i> ->> Retreive a shared password using a one-time passcode
         </div>
-       <!-- <div class="block">
+       <div class="block">
           <i class="fa-sharp fa-solid fa-clipboard-list"></i> ->> Edit the password policy on your account
-        </div> -->
+        </div>
         <div class="block">
           <i class="fa-solid fa-flask-vial"></i> ->> Test a password against a database of common passwords
         </div>
@@ -395,9 +402,8 @@
 </div>
 -->
 
-
-
 <script src="/js/dashboard.js"></script>
+<script src="/js/generate_pwd.js"></script>
 
 
 

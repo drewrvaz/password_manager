@@ -285,47 +285,73 @@ router.post('/testPWD', withAuth, async (req, res) => {
 });
 
 //set Password Policy
-// router.post('/setPolicy', withAuth, async (req, res) => { 
+router.get('/getPolicy', withAuth, async (req, res) => { 
+  var policy = {
+    "length": 12,
+    "special_char": true,
+    "numbers": true
+  }
 
-//   try {
-//     var policyData = await Policy.findOne({
-//       where: {
-//         userId: req.session.user_id
-//       }
-//     });
+  try {
+    var policyData = await Policy.findOne({
+      where: {
+        userId: req.session.user_id
+      }
+    });
 
-//     if (req.body) {
-//       if (policyData) {
-//         await Policy.update({
-//           length: req.body.length,
-//           special_char: req.body.special_char,
-//           numbers: req.body.numbers,
-//           lowercase: req.body.lowercase,
-//           uppercase: req.body.uppercase,
-//         },
-//         {
-//           where: {
-//             userId: req.body.userId
-//           }
-//         });
-//       } else await Policy.create({
-//         length: req.body.length,
-//         special_char: req.body.special_char,
-//         numbers: req.body.numbers,
-//         lowercase: req.body.lowercase,
-//         uppercase: req.body.uppercase,
-//         userId: req.session.user_id,
-//       });
+
+    if (policyData) {
+      policy.length = policyData.length;
+      policy.special_char = policyData.special_char;
+      policy.numbers = policyData.numbers;
+    } 
+    
+      res.status(200).json(policy);
+    } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//set Password Policy
+router.post('/setPolicy', withAuth, async (req, res) => { 
+
+  try {
+    var policyData = await Policy.findOne({
+      where: {
+        userId: req.session.user_id
+      }
+    });
+
+    if (req.body) {
+      console.log(policyData);
+      if (policyData) {
+        await Policy.update({
+          length: req.body.length,
+          special_char: req.body.special_char,
+          numbers: req.body.numbers,
+        },
+        {
+          where: {
+            userId: req.session.user_id
+          }
+        });
+      } else await Policy.create({
+        length: req.body.length,
+        special_char: req.body.special_char,
+        numbers: req.body.numbers,
+        userId: req.session.user_id,
+      });
       
-//       res.status(200).json({message:"Success"});
-//     } else res.status(400).json({message:"Bad Request"});
+      res.status(200).json({message:"Success"});
+    } else res.status(400).json({message:"Bad Request"});
 
-//   }
-//   catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 
 //Retrieve Label id using its name

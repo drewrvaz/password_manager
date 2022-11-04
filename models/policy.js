@@ -26,16 +26,6 @@ Policy.init(
       allowNull: false,
       defaultValue: true,
     },
-    lowercase: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-    uppercase: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
 },
 {
   sequelize,
@@ -47,3 +37,14 @@ Policy.init(
 );
 
 module.exports = Policy;
+
+// lowercase: {
+//   type: DataTypes.BOOLEAN,
+//   allowNull: false,
+//   defaultValue: true,
+// },
+// uppercase: {
+//   type: DataTypes.BOOLEAN,
+//   allowNull: false,
+//   defaultValue: true,
+// },

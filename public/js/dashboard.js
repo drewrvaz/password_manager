@@ -7,6 +7,20 @@ $("#addPassBtn").on("click", function() {
   $("#addPassModalURL").val("");
   $("#addPassModalLabel").val("");
   $("#addPassModalMsg").val("");
+  $("#addPassModalPWDConstraints").empty();
+
+  let pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+
+  //console.log(pwdPolicy);
+
+  if (pwdPolicy) {
+
+    if (pwdPolicy.special_char) $("#addPassModalPWDConstraints").append(", special");
+    if (pwdPolicy.numbers) $("#addPassModalPWDConstraints").append(", numbers");
+  
+    $("#addPassModalPWDConstraints").append(", and a length of " + pwdPolicy.length);
+
+  } else $("#addPassModalPWDConstraints").append("special, numbers, and length of 15");
 
   $("#addPassModal").addClass('is-active');
 });
@@ -27,6 +41,7 @@ $("#addPassSaveBtn").on("click", async function() {
   const url = $("#addPassModalURL").val();
   const label = $("#addPassModalLabel").val();
   const placeholder = "Placeholder";
+
 
   const data = {
     passphrase: placeholder,
@@ -74,9 +89,6 @@ $("#addPassCloseBtn").on("click", function() {
   $("#addPassModal").removeClass('is-active');
   loc.reload();
 });
-
-
-
 
 
 //  Open Site Information Modal
@@ -151,8 +163,6 @@ $("#viewPWDCloseBtn").on("click", function() {
 $(".DeletePassword").on("click", async function() {
   const loc = document.location;
   $("#viewDeleteStatusMsg").empty();
-  
-  
   
   const data = {
     id: this.dataset.id
@@ -260,7 +270,7 @@ $("#useOTPRetrieveBtn").on("click", async function() {
   .then(res => res.json())
   .then(res => { 
 
-      console.log(res);
+      // console.log(res);
       if (res.password) {
         // console.log("Delete was successful");
         $("#useOTPOutput").append(res.password);
@@ -288,8 +298,20 @@ $(".EditPassword").on("click", async function() {
   $("#editPassModalURL").val("");
   $("#editPassModalLabel").val("");
   $("#editPassModalMsg").val("");
+  $("#editPassModalPWDConstraints").empty();
 
+  let pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+
+  //console.log(pwdPolicy);
+
+  if (pwdPolicy) {
+
+    if (pwdPolicy.special_char) $("#editPassModalPWDConstraints").append(", special");
+    if (pwdPolicy.numbers) $("#editPassModalPWDConstraints").append(", numbers");
   
+    $("#editPassModalPWDConstraints").append(", and a length of " + pwdPolicy.length);
+
+  } else $("#editPassModalPWDConstraints").append("special, numbers, and length of 15");
 
   await fetch(`${loc.origin}/editPWD/${this.dataset.id}`)
   .then(res => res.json())
@@ -356,14 +378,17 @@ $("#editPassCancelBtn").on("click", function() {
   $("#editPassModal").removeClass('is-active');
 });
 
+// Open Password Test Modal
 $("#testPWDBtn").on("click", function() {
   $("#testPWDModal").addClass('is-active');
 });
 
+// Close Password Test Modal
 $("#testPWDModalCloseBtn").on("click", function() {
   $("#testPWDModal").removeClass('is-active');
 });
 
+// Run Password Test
 $("#runTestPWDModalBtn").on("click", async function() {
   $("#testPWDModalResult").empty();
   const loc = document.location;
@@ -429,9 +454,7 @@ $("#savePWDPolicyBtn").on("click", async function() {
     const data = {
       length: $("#setPolicyModalLength").val(),
       special_char: $("#setPolicyModalSpecial").is(':checked'),
-      numbers: $("#setPolicyModalNumber").is(':checked'),
-      uppercase: $("#setPolicyModalUppercase").is(':checked'),
-      lowercase: $("#setPolicyModalLowercase").is(':checked')
+      numbers: $("#setPolicyModalNumber").is(':checked')
     };
         
     await fetch(`${loc.origin}/setPolicy`, {
@@ -443,7 +466,11 @@ $("#savePWDPolicyBtn").on("click", async function() {
         })
         .then(res => res.json())
         .then(res => { 
-          if (res.message === "Success") $("#setPolicyOutput").append(success);
+          if (res.message === "Success") {
+            $("#setPolicyOutput").append(success);
+            window.localStorage.setItem("pwdPolicy", JSON.stringify(data));
+
+          }
           else $("#setPolicyOutput").append(error);
     
         })
@@ -492,3 +519,78 @@ $("#labelFilterBtn").on("click", async function() {
   }
  
 });
+
+
+function checkPasswordMatchAdd() {
+  var password = $("#addPassModalPWD").val();
+  var confirmPassword = $("#addPassModalPWD2").val();
+  var pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+
+  console.log("check edit pwd")
+
+  // console.log((password != confirmPassword));
+  if (password === confirmPassword){
+    $("#addPassModalPWDMatch").html(`Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span>`);
+    var found_special = false;
+    var found_number = false;
+
+    for(let i = 0; i < confirmPassword.length; i++){
+
+      if ( 47 < confirmPassword.charCodeAt(i) < 58) found_number = true;
+
+      if ((31 < confirmPassword.charCodeAt(i) < 48) || 
+          (57 < confirmPassword.charCodeAt(i) < 65) || 
+          (91 < confirmPassword.charCodeAt(i) < 97) ||
+          (122 < confirmPassword.charCodeAt(i) < 127)) found_special = true;
+    }
+
+    if ((pwdPolicy.special_char === found_special) 
+    && (pwdPolicy.numbers === found_number) 
+    && (password.length === parseInt(pwdPolicy.length)) 
+    && (confirmPassword.length === parseInt(pwdPolicy.length))) $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
+    else $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+
+  } else {
+    $("#addPassModalPWDMatch").html(`Passwords match <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+    $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+  }
+}
+
+function checkPasswordMatchEdit() {
+  var password = $("#editPassModalPWD").val();
+  var confirmPassword = $("#editPassModalPWD2").val();
+  var pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+
+  console.log("check edit pwd")
+
+  // console.log((password != confirmPassword));
+  if (password === confirmPassword){
+    $("#editPassModalPWDMatch").html(`Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span>`);
+    var found_special = false;
+    var found_number = false;
+
+    for(let i = 0; i < confirmPassword.length; i++){
+
+      if ( 47 < confirmPassword.charCodeAt(i) < 58) found_number = true;
+
+      if ((31 < confirmPassword.charCodeAt(i) < 48) || 
+          (57 < confirmPassword.charCodeAt(i) < 65) || 
+          (91 < confirmPassword.charCodeAt(i) < 97) ||
+          (122 < confirmPassword.charCodeAt(i) < 127)) found_special = true;
+    }
+
+    if ((pwdPolicy.special_char === found_special) 
+    && (pwdPolicy.numbers === found_number) 
+    && (password.length === parseInt(pwdPolicy.length)) 
+    && (confirmPassword.length === parseInt(pwdPolicy.length))) $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
+    else $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+
+  } else {
+    $("#editPassModalPWDMatch").html(`Passwords match <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+    $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
+  }
+}
+
+$("#addPassModalPWD, #addPassModalPWD2").keyup(checkPasswordMatchAdd);
+$("#editPassModalPWD, #editPassModalPWD2").keyup(checkPasswordMatchEdit);
+
