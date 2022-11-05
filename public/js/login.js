@@ -5,6 +5,7 @@ const loginFormHandler = async (event) => {
   // Gather the data from the form elements on the page
   const username = document.querySelector('#username-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
+  window.localStorage.removeItem('pwdPolicy');
 
   if (username && password) {
     // Send the username and password to the server
@@ -16,6 +17,7 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/');
+      
     } else {
       $('#loginMessage').text("Failed to login");
     }

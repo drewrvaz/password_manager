@@ -36,7 +36,7 @@
     <div class="column hero-body has-background-grey-lighter is-flex is-flex-direction-row is-flex-wrap-wrap is-justify-content-center mt-0">
   <!-- List the Password Cards -->
       {{#each passphrases as |passphrase|}}
-      <div class="card m-2 label-{{passphrase.label_id}}" style="height:100px;width:400px;">
+      <div class="card m-2 label-{{passphrase.label_id}} label-1" style="height:100px;width:400px;">
           <header class="card-header  has-background-black">
           <p class="card-header-title  has-text-white">
               {{passphrase.name}}
@@ -317,7 +317,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="is-size-5 has-text-weight-bold">Result</label>
+        <label class="is-size-6 has-text-weight-bold">Result</label>
         <div class="box has-text-centered has-text-weight-semi-bold" id="testPWDModalResult"></div>
       </div>
     <footer class="modal-card-foot">

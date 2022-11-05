@@ -49,10 +49,11 @@ $("#addPassSaveBtn").on("click", async function() {
     name: name,
     username: username,
     password: pwd1,
+    confirmPassword: pwd2,
     label: label
   };
 
-  if (pwd1 === pwd2){
+  if ((pwd1 === pwd2) && pwd1 && pwd2 && name){
         
   await fetch(`${loc.origin}/dashboard`, {
           method: 'POST',
@@ -300,18 +301,24 @@ $(".EditPassword").on("click", async function() {
   $("#editPassModalMsg").val("");
   $("#editPassModalPWDConstraints").empty();
 
-  let pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+  var pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
 
   //console.log(pwdPolicy);
 
-  if (pwdPolicy) {
+  if (!pwdPolicy){
 
-    if (pwdPolicy.special_char) $("#editPassModalPWDConstraints").append(", special");
-    if (pwdPolicy.numbers) $("#editPassModalPWDConstraints").append(", numbers");
-  
-    $("#editPassModalPWDConstraints").append(", and a length of " + pwdPolicy.length);
+    await fetch(`${loc.origin}/getPolicy`)
+              .then(res => res.json())
+              .then(res => {
+                pwdPolicy = res;
+                window.localStorage.setItem('pwdPolicy',JSON.stringify(res));
+            });
+    // $("#editPassModalPWDConstraints").append(", special, numbers, and length of 15");
+  }
 
-  } else $("#editPassModalPWDConstraints").append("special, numbers, and length of 15");
+  if (pwdPolicy.special_char) $("#editPassModalPWDConstraints").append(", special");
+  if (pwdPolicy.numbers) $("#editPassModalPWDConstraints").append(", numbers");
+  $("#editPassModalPWDConstraints").append(", and a length of " + pwdPolicy.length);
 
   await fetch(`${loc.origin}/editPWD/${this.dataset.id}`)
   .then(res => res.json())
@@ -327,6 +334,8 @@ $(".EditPassword").on("click", async function() {
         $("#editPassModalLabel").val(res.label);
         $("#editPassModal").addClass('is-active');
         $("#editPassSaveBtn").attr("data-id",this.dataset.id);
+        $("#editPassModalPWDMatch").html(`Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span>`);
+        $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
       } else {
          $("#editPassModalMsg").append("Unable to retrieve password data.  Cancel and try again.");
          $("#editPassModal").addClass('is-active');
@@ -375,7 +384,9 @@ $("#editPassSaveBtn").on("click", async function() {
 
 // Close Edit Password Modal
 $("#editPassCancelBtn").on("click", function() {
+  const loc = document.location;
   $("#editPassModal").removeClass('is-active');
+  loc.reload();
 });
 
 // Open Password Test Modal
@@ -526,7 +537,15 @@ function checkPasswordMatchAdd() {
   var confirmPassword = $("#addPassModalPWD2").val();
   var pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
 
-  console.log("check edit pwd")
+  if (!pwdPolicy) {
+    pwdPolicy = {
+      "length" : "15",
+      "special_char": true,
+      "numbers" : true
+    } 
+  }
+
+  // console.log("check edit pwd")
 
   // console.log((password != confirmPassword));
   if (password === confirmPassword){
@@ -534,20 +553,20 @@ function checkPasswordMatchAdd() {
     var found_special = false;
     var found_number = false;
 
-    for(let i = 0; i < confirmPassword.length; i++){
-
-      if ( 47 < confirmPassword.charCodeAt(i) < 58) found_number = true;
-
-      if ((31 < confirmPassword.charCodeAt(i) < 48) || 
-          (57 < confirmPassword.charCodeAt(i) < 65) || 
-          (91 < confirmPassword.charCodeAt(i) < 97) ||
-          (122 < confirmPassword.charCodeAt(i) < 127)) found_special = true;
+    if ( (47 < confirmPassword.charCodeAt(i)) && ( confirmPassword.charCodeAt(i)< 58) ) {
+      found_number = true;
+      console.log(confirmPassword.charCodeAt(i));
     }
+
+    if ( ((31 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i)< 48)) || 
+        ((57 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i)< 65)) || 
+        ((91 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i) < 97)) ||
+        ((122 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i) < 127)) ) found_special = true;
 
     if ((pwdPolicy.special_char === found_special) 
     && (pwdPolicy.numbers === found_number) 
-    && (password.length === parseInt(pwdPolicy.length)) 
-    && (confirmPassword.length === parseInt(pwdPolicy.length))) $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
+    && (parseInt(pwdPolicy.length)  <= password.length) 
+    && (parseInt(pwdPolicy.length ) <= confirmPassword.length)) $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
     else $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
 
   } else {
@@ -556,12 +575,21 @@ function checkPasswordMatchAdd() {
   }
 }
 
+
+
 function checkPasswordMatchEdit() {
   var password = $("#editPassModalPWD").val();
   var confirmPassword = $("#editPassModalPWD2").val();
   var pwdPolicy = JSON.parse(window.localStorage.getItem("pwdPolicy"));
+  if (!pwdPolicy) {
+    pwdPolicy = {
+      "length" : 15,
+      "special_char": true,
+      "numbers" : true
+    } 
+  }
 
-  console.log("check edit pwd")
+  // console.log("check edit pwd")
 
   // console.log((password != confirmPassword));
   if (password === confirmPassword){
@@ -571,18 +599,21 @@ function checkPasswordMatchEdit() {
 
     for(let i = 0; i < confirmPassword.length; i++){
 
-      if ( 47 < confirmPassword.charCodeAt(i) < 58) found_number = true;
+      if ( (47 < confirmPassword.charCodeAt(i)) && ( confirmPassword.charCodeAt(i)< 58) ) {
+        found_number = true;
+        console.log(confirmPassword.charCodeAt(i));
+      }
 
-      if ((31 < confirmPassword.charCodeAt(i) < 48) || 
-          (57 < confirmPassword.charCodeAt(i) < 65) || 
-          (91 < confirmPassword.charCodeAt(i) < 97) ||
-          (122 < confirmPassword.charCodeAt(i) < 127)) found_special = true;
+      if ( ((31 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i)< 48)) || 
+          ((57 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i)< 65)) || 
+          ((91 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i) < 97)) ||
+          ((122 < confirmPassword.charCodeAt(i)) && (confirmPassword.charCodeAt(i) < 127)) ) found_special = true;
     }
 
     if ((pwdPolicy.special_char === found_special) 
     && (pwdPolicy.numbers === found_number) 
-    && (password.length === parseInt(pwdPolicy.length)) 
-    && (confirmPassword.length === parseInt(pwdPolicy.length))) $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
+    && (parseInt(pwdPolicy.length)  <= password.length) 
+    && (parseInt(pwdPolicy.length ) <= confirmPassword.length)) $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i>`);
     else $("#editPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-danger"><i class="fa-solid fa-square-xmark"></i></span>`);
 
   } else {

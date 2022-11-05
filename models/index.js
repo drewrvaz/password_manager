@@ -16,6 +16,12 @@ EncryptedPwd.belongsTo(Passphrase);
 User.hasOne(Avatar);
 Avatar.belongsTo(User);
 
+User.hasMany(Label);
+Label.belongsTo(User);
+
+// Passphrase.hasOne(Label);
+// Label.belongsTo(Passphrase);
+
 User.hasOne(Policy);
 Policy.belongsTo(User);
 
