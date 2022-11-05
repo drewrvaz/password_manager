@@ -10,7 +10,8 @@ async function generatePassword() {
   await fetch(`${loc.origin}/getPolicy`)
     .then(res => res.json())
     .then(res => {
-      
+
+        window.localStorage.setItem("pwdPolicy", JSON.stringify(res));
         //Check if user selected a password length that meets the criteria
         if ( (7 < res.length) && (res.length < 65) ) {   
           
@@ -53,7 +54,7 @@ async function generatePassword() {
           }
         } 
   });
-
+  // console.log(password);
   return password;
 }
 
@@ -156,6 +157,10 @@ $("#addGeneratePWDBtn").on("click", async function() {
 
   $("#addPassModalPWD").val(password);
   $("#addPassModalPWD2").val(password);
+  $("#editPassModalPWDMatch").empty();
+  $("#addPassModalPWDPolicy").empty();
+  $("#addPassModalPWDMatch").html(`Passwords match <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span>`);
+  $("#addPassModalPWDPolicy").html(`Password meets policy standards <span class="has-text-success"><i class="fa-solid fa-square-check"></i></span>`);
 });
 
 // edit modal event listener to generate password

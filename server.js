@@ -20,7 +20,7 @@ const sess = {
   rolling: true,
   saveUninitialized: false,
   cookie: {
-    expires: 120000
+    expires: 240000
   },
   store: new SequelizeStore({
     db: sequelize

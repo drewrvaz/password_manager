@@ -3,6 +3,7 @@ const { Passphrase, EncryptedPwd, Label, OneTimePasscode, RainbowTable, Policy }
 const withAuth = require('../utils/auth');
 const { decryptPWD, onetimePasscode, encryptPWD } = require('../utils/helpers');
 const moment = require('moment');
+const { Op } = require('sequelize');
 
 router.get('/', withAuth ,async (req, res) => {
   try {
@@ -43,8 +44,21 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const passphraseData = await Passphrase.findAll({ where: { userId: req.session.user_id } });
     const passphrases = passphraseData.map((passphrase) => passphrase.get({ plain: true }));
 
-    const labelData = await Label.findAll();
+    const labelData = await Label.findAll({ 
+      order:[
+        ['id', 'ASC'],
+      ],
+      where: { 
+        [Op.or]: [
+          {userId: null },
+          {userId: req.session.user_id }
+        ]
+      }
+    });
+    
+    
     const labels = labelData.map((label) => label.get({ plain: true }));
+    // console.log(labels);
 
     res.render('dashboard', { username: req.session.username, passphrases, logged_in: req.session.logged_in, lastlogged_in: req.session.lastlogged_in, labels,});
 
@@ -62,47 +76,60 @@ router.post('/dashboard', withAuth, async (req, res) => {
     var labelId = 1;
     var labelData = null;
 
-    if (req.body.label) {
-       labelData = await Label.findOne({
-        where: {
-          name: req.body.label
-        }
-      });
+    if (req.body && req.body.name && req.body.password && req.body.confirmPassword) {
 
-      if (!labelData) {
-        labelData = await Label.create({
-          name: req.body.label,
-        });
-        
+      if (req.body.label) {
         labelData = await Label.findOne({
           where: {
-            name: req.body.label
+            name: req.body.label,
+            userId: req.session.user_id
           }
         });
-      }
-      labelId = labelData.id;
+
+        if (!labelData) {
+          labelData = await Label.create({
+            name: req.body.label,
+            userId: req.session.user_id
+          });
+          
+          labelData = await Label.findOne({
+            where: {
+              name: req.body.label,
+              userId: req.session.user_id
+            }
+          });
+        }
+        labelId = labelData.id;
+      }  
+
+      const passphraseData = await Passphrase.create({
+        passphrase: req.body.passphrase,
+        url: req.body.url,
+        name: req.body.name,
+        username: req.body.username,
+        userId: req.session.user_id,
+        label_id: labelId
+      });
+
+      await EncryptedPwd.create({
+        encrypted_password: req.body.password,
+        passphraseId: passphraseData.id
+      });
+
+      res.json({message:"Password added to the database."});
+    } else {
+
+      res.json({message:"Error missing parameters in request"});
+
     }
 
-    const passphraseData = await Passphrase.create({
-      passphrase: req.body.passphrase,
-      url: req.body.url,
-      name: req.body.name,
-      username: req.body.username,
-      userId: req.session.user_id,
-      label_id: labelId
-    });
+  } catch (err) {
+      console.log(err);
+      res.json({message: err});
+     
+    }
 
-    await EncryptedPwd.create({
-      encrypted_password: req.body.password,
-      passphraseId: passphraseData.id
-    });
     
-  }
-  catch (err) {
-    console.log(err);
-  }
-
-  res.json({message:"Password added to the database."});
 
 });
 
@@ -178,9 +205,9 @@ router.get('/editPWD/:id', async (req, res) => { //withAuth
 
     const passphraseData = await Passphrase.findOne({ where: { id: req.params.id }, include: [{ model: EncryptedPwd }], });
     const labelData = await Label.findByPk(passphraseData.label_id);
+    var labelName = "";
 
-    if (labelData) labelName = labelData.name;
-    else labName = "All";
+    if (labelData && (passphraseData.label_id !== 1)) labelName = labelData.name;
 
     const password = decryptPWD(passphraseData.encrypted_pwd.encrypted_password, passphraseData.passphrase);
     const data =  {
@@ -191,6 +218,8 @@ router.get('/editPWD/:id', async (req, res) => { //withAuth
       "url": passphraseData.url
     }
 
+    // console.log(data);
+
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
@@ -198,7 +227,7 @@ router.get('/editPWD/:id', async (req, res) => { //withAuth
 
 });
 
-//edit password card
+//edit password cardAll
 router.post('/editPWD', withAuth, async (req, res) => { 
 
   try {
@@ -209,18 +238,21 @@ router.post('/editPWD', withAuth, async (req, res) => {
 
        labelData = await Label.findOne({
         where: {
-          name: req.body.label
+          name: req.body.label,
+          userId: req.session.user_id
         }
       });
 
       if (!labelData) {
         labelData = await Label.create({
           name: req.body.label,
+          userId: req.session.user_id
         });
         
         labelData = await Label.findOne({
           where: {
-            name: req.body.label
+            name: req.body.label,
+            userId: req.session.user_id
           }
         });
       }
@@ -287,7 +319,7 @@ router.post('/testPWD', withAuth, async (req, res) => {
 //set Password Policy
 router.get('/getPolicy', withAuth, async (req, res) => { 
   var policy = {
-    "length": 12,
+    "length": 15,
     "special_char": true,
     "numbers": true
   }
@@ -305,7 +337,7 @@ router.get('/getPolicy', withAuth, async (req, res) => {
       policy.special_char = policyData.special_char;
       policy.numbers = policyData.numbers;
     } 
-    
+      // console.log(policy);
       res.status(200).json(policy);
     } catch (err) {
     console.log(err);
@@ -324,7 +356,7 @@ router.post('/setPolicy', withAuth, async (req, res) => {
     });
 
     if (req.body) {
-      console.log(policyData);
+      // console.log(policyData);
       if (policyData) {
         await Policy.update({
           length: req.body.length,
