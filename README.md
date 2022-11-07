@@ -28,7 +28,7 @@ npm install; bcrypt, sequelize, dotenv, express, handlebars, mysql, crypto-js, a
 
 If using on the web:
 Create an account and starting saving your passwords!
-Live link: https://obscure-oasis-37160.herokuapp.com/dashboard
+Live link: https://pacific-thicket-33283.herokuapp.com/dashboard
 
 ## Usage
 If using in command line:
@@ -51,5 +51,4 @@ The MIT License
 ## Authors and Ackowledgement
 Created by;
 Will Winston: will.winston@gmail.com, https://github.com/win-will
-Zach Edmonson: zdedmonson@gmail.com, https://github.com/zdedm
 Andrew Vazquez: drewrvaz@gmail.com, https://github/com/drewrvaz
