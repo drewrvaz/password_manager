@@ -171,7 +171,7 @@ router.post('/retrieveOTP', withAuth, async (req, res) => {
       otpData = await OneTimePasscode.create(data);
     }
 
-    res.status(200).json({"passcode":passcode});
+    res.status(200).json({"passcode": passcode});
   } catch (err) {
     res.status(500).json(err);
   }
