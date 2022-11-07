@@ -27,12 +27,6 @@ OneTimePasscode.init(
 
   },
   {
-    hooks: {
-      beforeCreate: async (newOTPData) => {
-        newOTPData.passcode = onetimePasscode();
-        return newOTPData.passcode;
-      },
-    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -42,3 +36,10 @@ OneTimePasscode.init(
 );
 
 module.exports = OneTimePasscode;
+
+// hooks: {
+//   beforeCreate: async (newOTPData) => {
+//     newOTPData.passcode = onetimePasscode();
+//     return newOTPData.passcode;
+//   },
+// },
