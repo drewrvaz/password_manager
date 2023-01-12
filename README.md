@@ -28,7 +28,7 @@ npm install; bcrypt, sequelize, dotenv, express, handlebars, mysql, crypto-js, a
 
 If using on the web:
 Create an account and starting saving your passwords!
-Live link: https://pacific-thicket-33283.herokuapp.com/dashboard
+Live link: https://safe-fjord-52181.herokuapp.com/
 
 ## Usage
 If using in command line:
